@@ -67,28 +67,47 @@
 .time-cell {
     display: inline-block;
     padding: 5px;
-    width: 60px;
+    width: 80px;
     color: #34495e;
     float: left;
-    height: 100%;
-    line-height: 100%;
 }
-.content-cell {
+
+.task-container {
     display: inline-block;
+
+}
+
+.task-row {
+
+}
+
+.content-cell {
+    display: block;
     padding: 5px;
 }
 
-.add-task-cell {
-    clear: left;
+.edit-box {
     display: block;
+    background: #ecf0f1;
+    margin: 3px;
+    width: 540px;
+    padding: 5px;
+    border: 1px solid lightgray;
+}
+
+.add-task-cell {
+    display: block;
+    margin-left: 65px;
+    width: 540px;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: #7f8c8d;
 }
 
-.edit-box {
+.clock {
     display: inline-block;
-    background: #ecf0f1;
-    margin: 3px;
-    width: 85%;
+}
+
+.logo {
+    font-size: 2rem;
 }

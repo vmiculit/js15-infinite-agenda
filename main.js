@@ -7,18 +7,19 @@ angular.module("js15")
 	// Create an Empty Day Container
 
 	$scope.dayContainer = []
+	$scope.currentYear = new Date().getFullYear()
 
 	// Set Today's date
 
 	$scope.today = new Date()
 
-	// Set Counters in both directions
+	// Set Date Counters in both directions
 
 	$scope.futureCounter = 1
 	$scope.pastCounter = 1
 
 
-	// Find and Set Yesterday's Date
+	// Find and Set Previous Day's Date
 
 	$scope.findPreviousDayDate = function() {
 		var date = new Date($scope.today)
@@ -28,7 +29,7 @@ angular.module("js15")
 
 	$scope.previousDay = $scope.findPreviousDayDate()
 
-	// Find and Set Tomorrow's Date
+	// Find and Set next Day's Date
 
 	$scope.findNextDayDate = function(offset) {
 		var date = new Date($scope.today)
@@ -45,9 +46,9 @@ angular.module("js15")
 
 		for (var i = 0; i <= 23; i++) {
 			if (i <= 11) {
-				hoursArray.push({hour : i+1, meridiem : "am", tasks : [{content : "Test", show : true, edit : false}], background : "#ecf0f1"})
+				hoursArray.push({hour : i+1, meridiem : "am", tasks : [], background : "#ecf0f1"})
 			} else {
-				hoursArray.push({hour : i-11, meridiem : "pm", tasks : [{content : "", show : true, edit : false}], background : "#bdc3c7"})
+				hoursArray.push({hour : i-11, meridiem : "pm", tasks : [], background : "#bdc3c7"})
 			}
 		}
 		return hoursArray
@@ -139,13 +140,33 @@ angular.module("js15")
 
 	// Adding, editing & removing content items
 
-	$scope.addNewTask = function(dayIndex, timeIndex) {
+	$scope.addNewTask = function(dayIndex, timeIndex, event) {
 		$scope.dayContainer[dayIndex].hours[timeIndex].tasks.push({content : "", show : false, edit : true})
+		console.log(event)
+		$timeout(function() {
+			event.target.parentElement.previousElementSibling.lastElementChild.children[1].focus()
+		});
 	}
 
-	$scope.editNote = function(dayIndex, timeIndex, idx) {
+	$scope.editNote = function(dayIndex, timeIndex, idx, event) {
 		$scope.dayContainer[dayIndex].hours[timeIndex].tasks[idx].show = false
 		$scope.dayContainer[dayIndex].hours[timeIndex].tasks[idx].edit = true
+
+		$timeout(function() {
+			event.target.nextElementSibling.focus()
+		});
+
+
+	}
+
+	$scope.finishEditing = function(dayIndex, timeIndex, idx) {
+
+		if ($scope.dayContainer[dayIndex].hours[timeIndex].tasks[idx].content === "") {
+			$scope.dayContainer[dayIndex].hours[timeIndex].tasks.splice(idx, 1)
+		} else {
+		$scope.dayContainer[dayIndex].hours[timeIndex].tasks[idx].show = true
+		$scope.dayContainer[dayIndex].hours[timeIndex].tasks[idx].edit = false
+		}
 	}
 
 	}])

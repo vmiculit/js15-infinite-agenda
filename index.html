@@ -13,7 +13,7 @@
 <body ng-controller="js15Troller">
 <nav class="navbar-container">
 	<div class="navbar-content">
-		<div class="nav-title">IA 2016</div>
+		<div class="nav-title"><i class="fa fa-calendar-plus-o logo"></i> Infinite Agenda {{currentYear}}</div>
 		<div class="navbar-view-container">
 			<div class="nav-view-agenda">Agenda</div>
 			<div class="nav-view-calendar">Calendar</div>
@@ -25,14 +25,16 @@
 	<div class="day-container" ng-repeat="(dayIndex, day) in dayContainer">
 		<div class="day-row" id="{{day.anchor}}"> {{day.name}}, {{day.month}} {{day.date}}, {{day.year}}</div>
 			<div class="time-row" ng-repeat="(timeIndex, time) in day.hours">
-				<div class="time-cell" style="background : {{time.background}};">{{time.hour}} {{time.meridiem}}</div>
-				<div ng-repeat="task in time.tasks">
-					<div class="content-cell"  ng-show="task.show" ng-click="editNote(dayIndex, timeIndex, $index)">{{task.content}}</div>
-
-					<input class="edit-box" type="text" ng-model="task.content" ng-show="task.edit">
+				<div class="time-cell" style="background : {{time.background}};"><i class="fa fa-clock-o clock"></i> {{time.hour}} {{time.meridiem}}</div>
+				<div class="task-container">
+					<div class="task-row" ng-repeat="task in time.tasks">
+						<div class="content-cell"  ng-show="task.show" ng-click="editNote(dayIndex, timeIndex, $index, $event)">{{task.content}}</div>
+						<input class="edit-box" type="text" ng-model="task.content" ng-show="task.edit" ng-blur="finishEditing(dayIndex, timeIndex, $index)">
+					</div>
 				</div>
-				<div class="add-task-cell" ng-click="addNewTask(dayIndex, timeIndex)">+</div>
+				<div class="add-task-cell" ng-click="addNewTask(dayIndex, timeIndex, $event)"><i class="fa fa-plus"></i></div>
 			</div>
+		</div>
 	</div>
 </div>
 
