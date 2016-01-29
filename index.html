@@ -22,10 +22,16 @@
 </nav>
 
 <div class="agenda-container">
-	<div class="day-container" ng-repeat="day in dayContainer">
-		<div class="day-row"> {{day.name}}, {{day.month}} {{day.date}}, {{day.year}}</div>
-			<div class="time-row" ng-repeat="time in day.hours">
-				<div class="time-cell">{{time.hour}} {{time.meridiem}}</div><div class="content-cell" ng-repeat="task in time.tasks">{{task.content}}</div>
+	<div class="day-container" ng-repeat="(dayIndex, day) in dayContainer">
+		<div class="day-row" id="{{day.anchor}}"> {{day.name}}, {{day.month}} {{day.date}}, {{day.year}}</div>
+			<div class="time-row" ng-repeat="(timeIndex, time) in day.hours">
+				<div class="time-cell" style="background : {{time.background}};">{{time.hour}} {{time.meridiem}}</div>
+				<div ng-repeat="task in time.tasks">
+					<div class="content-cell"  ng-show="task.show" ng-click="editNote(dayIndex, timeIndex, $index)">{{task.content}}</div>
+
+					<input class="edit-box" type="text" ng-model="task.content" ng-show="task.edit">
+				</div>
+				<div class="add-task-cell" ng-click="addNewTask(dayIndex, timeIndex)">+</div>
 			</div>
 	</div>
 </div>
